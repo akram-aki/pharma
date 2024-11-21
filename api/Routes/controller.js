@@ -50,7 +50,7 @@ const loginUser = (req, res) => {
       if (password === user.password) {
         user.password = null;
         jwt.sign(
-          { email: user.email, id: user.id, name: user.name },
+          { email: user.email, id: user.id, name: user.user_name },
           jwtSecret,
           {},
           (err, token) => {
@@ -70,7 +70,6 @@ const getUserName = (req, res) => {
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
       if (err) throw err;
-
       res.json({ name: userData.name, id: userData.id });
     });
   }

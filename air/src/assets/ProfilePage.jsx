@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProfileSettingPage from "./ProfileSettings";
-import Accomodations from "./Accomodations";
+import AddPatients from "./AddPatients";
 import Bookings from "./Bookings";
 
 export default function ProfilePage() {
@@ -16,36 +16,21 @@ export default function ProfilePage() {
               : "border border-gray-400 hover:shadow-lg rounded-full p-1 w-64 text-black font-semibold transition-colors bg-gray-100 "
           }`}
         >
-          My Account
+          ACCOUNT
         </button>
+
         <button
-          onClick={() => setCurrPage("Bookings")}
+          onClick={() => setCurrPage("PATIENTS")}
           className={`${
-            currpage === "Bookings"
+            currpage === "PATIENTS"
               ? "border border-gray-400 hover:shadow-lg rounded-full p-1 w-64 font-semibold bg-primary transition-colors text-white "
               : "border border-gray-400 hover:shadow-lg rounded-full p-1 w-64 text-black font-semibold transition-colors bg-gray-100 "
           }`}
         >
-          My Bookings
-        </button>
-        <button
-          onClick={() => setCurrPage("Accomodations")}
-          className={`${
-            currpage === "Accomodations"
-              ? "border border-gray-400 hover:shadow-lg rounded-full p-1 w-64 font-semibold bg-primary transition-colors text-white "
-              : "border border-gray-400 hover:shadow-lg rounded-full p-1 w-64 text-black font-semibold transition-colors bg-gray-100 "
-          }`}
-        >
-          My Accomodations
+          PATIENTS
         </button>
       </div>
-      {currpage === "Bookings" ? (
-        <Bookings />
-      ) : currpage === "Accomodations" ? (
-        <Accomodations />
-      ) : (
-        <ProfileSettingPage />
-      )}
+      {currpage === "PATIENTS" ? <AddPatients /> : <ProfileSettingPage />}
     </div>
   );
 }

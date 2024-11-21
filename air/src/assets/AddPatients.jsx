@@ -4,11 +4,10 @@ import Perks from "./Perks";
 import { userContext } from "../User";
 import axios from "axios";
 
-export default function Accomodations() {
+export default function AddPatients() {
   const { action } = useParams();
-  const [title, setTitle] = useState("");
-  const [adress, setAdress] = useState("");
-  const [addedPhotos, setAddedPhotoes] = useState([]);
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
   const [photoLink, setPhotoLink] = useState("");
   const [Description, setDescription] = useState("");
   const [perks, setPerks] = useState([]);
@@ -78,8 +77,8 @@ export default function Accomodations() {
     e.preventDefault();
     if (
       !id ||
-      !title ||
-      !adress ||
+      !first_name ||
+      !last_name ||
       !addedPhotos ||
       !Description ||
       !perks ||
@@ -93,8 +92,8 @@ export default function Accomodations() {
       axios
         .post("/userAccomodation", {
           id,
-          title,
-          adress,
+          first_name,
+          last_name,
           addedPhotos,
           Description,
           perks,
@@ -157,9 +156,9 @@ export default function Accomodations() {
                   alt="img"
                   className="h-72 object-cover w-full rounded-lg "
                 />
-                <span className="font-semibold">{(key, item.title)}</span>
+                <span className="font-semibold">{(key, item.first_name)}</span>
                 <span className="opacity-55 ">{key}1,618 kilometers away</span>
-                <span className="opacity-55">{(key, item.adress)} </span>
+                <span className="opacity-55">{(key, item.last_name)} </span>
                 <p className=" font-semibold">{(key, item.extrainfo)}</p>
               </Link>
             ))}
@@ -186,22 +185,22 @@ export default function Accomodations() {
           </div>
           <form onSubmit={handleSubmit}>
             {preInput(
-              "Title",
-              "title for your place. should be short and catchy"
+              "first_name",
+              "first_name for your place. should be short and catchy"
             )}
             <input
               type="text"
-              value={title}
-              onChange={(ev) => setTitle(ev.target.value)}
-              placeholder="title, for example : My lovely appartment"
+              value={first_name}
+              onChange={(ev) => setfirst_name(ev.target.value)}
+              placeholder="first_name, for example : My lovely appartment"
             />
-            {preInput("Adress", "Adress to your place")}
+            {preInput("last_name", "Adress to your place")}
 
             <input
               type="text"
               placeholder="address"
-              value={adress}
-              onChange={(ev) => setAdress(ev.target.value)}
+              value={last_name}
+              onChange={(ev) => setlast_name(ev.target.value)}
             />
             {preInput("Photos", "photoes of your place")}
 

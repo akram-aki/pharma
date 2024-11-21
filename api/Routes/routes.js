@@ -27,7 +27,7 @@ router.post("/deleteUser", deleteUser);
 
 router.get("/addPhotoLink", addPhotoLink);
 
-const idk = multer({ dest: "C:/Users/aki/Desktop/air2/api/images/" });
+const idk = multer({ dest: "C:/Users/songo/Desktop/hadjer/api/Images" });
 router.post("/uploadPhoto", idk.array("photos", 100), uploadPhoto);
 
 router.post("/userAccomodation", addNewAccomodation);
