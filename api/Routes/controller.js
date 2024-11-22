@@ -159,31 +159,11 @@ const addPhotoLink = async (req, res) => {
   res.json(newName);
 };
 
-const addNewAccomodation = (req, res) => {
-  const {
-    id,
-    title,
-    adress,
-    addedPhotos,
-    Description,
-    perks,
-    extraInfo,
-    chekIn,
-    maxGuests,
-  } = req.body;
+const addPatient = (req, res) => {
+  const { first_name, last_name, adress, photoLink, SSW, illness } = req.body;
 
-  const VALUES = [
-    id,
-    title,
-    adress,
-    addedPhotos,
-    Description,
-    perks,
-    extraInfo,
-    chekIn,
-    maxGuests,
-  ];
-  pool.query(queries.addUserAccomodationQuery, VALUES, (error, results) => {
+  const VALUES = [first_name, last_name, adress, photoLink[0], SSW, illness];
+  pool.query(queries.addPatientQuery, VALUES, (error, results) => {
     if (error) return console.log(error);
     return res.json("success!");
   });
@@ -207,8 +187,8 @@ const uploadPhoto = (req, res) => {
   res.json(uploadedPhotos);
 };
 
-const fetchPlaces = (req, res) => {
-  const query = "SELECT * FROM useraccomodations";
+const fetchPatients = (req, res) => {
+  const query = "SELECT * FROM patients";
   pool.query(query, (error, result) => {
     if (error) res.status(500).json("didnt work");
     else {
@@ -224,7 +204,7 @@ export {
   updateUser,
   deleteUser,
   addPhotoLink,
-  addNewAccomodation,
+  addPatient,
   uploadPhoto,
-  fetchPlaces,
+  fetchPatients,
 };

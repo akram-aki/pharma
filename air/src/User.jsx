@@ -24,14 +24,14 @@ export function User({ children }) {
         });
     }
     if (items.length === 0) {
-      axios.get("/fetchPlaces").then((response) => {
+      axios.get("/fetchPatients").then((response) => {
         setItems(() => {
           const set = new Set();
           const newItems = response.data.filter((item) => {
-            if (set.has(item.postid)) {
+            if (set.has(item.id)) {
               return false;
             }
-            set.add(item.postid);
+            set.add(item.id);
             return true;
           });
           return newItems;

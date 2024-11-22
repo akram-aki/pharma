@@ -8,9 +8,9 @@ import {
   updateUser,
   deleteUser,
   addPhotoLink,
-  addNewAccomodation,
+  addPatient,
   uploadPhoto,
-  fetchPlaces,
+  fetchPatients,
 } from "./controller.js";
 
 const router = Router();
@@ -30,8 +30,8 @@ router.get("/addPhotoLink", addPhotoLink);
 const idk = multer({ dest: "C:/Users/songo/Desktop/hadjer/api/Images" });
 router.post("/uploadPhoto", idk.array("photos", 100), uploadPhoto);
 
-router.post("/userAccomodation", addNewAccomodation);
+router.post("/addPatient", addPatient);
 
-router.get("/fetchPlaces", fetchPlaces);
+router.get("/fetchPatients", fetchPatients);
 
 export default router;

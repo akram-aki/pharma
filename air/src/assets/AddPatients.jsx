@@ -1,6 +1,5 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Perks from "./Perks";
 import { userContext } from "../User";
 import axios from "axios";
 
@@ -8,15 +7,11 @@ export default function AddPatients() {
   const { action } = useParams();
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
+  const [adress, setAdress] = useState("");
   const [photoLink, setPhotoLink] = useState("");
-  const [Description, setDescription] = useState("");
-  const [perks, setPerks] = useState([]);
-  const [extraInfo, setExtraInfo] = useState("");
-  const [chekIn, setChekIn] = useState("");
-  const [maxGuests, setMaxGuests] = useState("");
-  const { id, items } = useContext(userContext);
-  const [ready, setReady] = useState(false);
-  const currentUserAccomodation = items.filter((item) => item.id === id);
+  const [SSW, setSSW] = useState("");
+  const [illness, setIllness] = useState("");
+  const { id, patients } = useContext(userContext);
 
   function inputHeader(text) {
     return <h2 className="text-2xl mt-4  ">{text}</h2>;
@@ -34,19 +29,6 @@ export default function AddPatients() {
     );
   }
 
-  function Addphoto(photoLink) {
-    axios
-      .get("/addPhotoLink", {
-        params: {
-          id: id,
-          photoLink,
-        },
-      })
-      .then((Response) => {
-        setAddedPhotoes((prevPhotoes) => [...prevPhotoes, Response.data]);
-      });
-  }
-
   function uploadPhoto(e) {
     const files = e.target.files;
     const data = new FormData();
@@ -60,18 +42,9 @@ export default function AddPatients() {
         headers: { "Content-type": "multipart/form-data" },
       })
       .then((response) => {
-        if (response.data.length === 1)
-          setAddedPhotoes((prevPhotoes) => [...prevPhotoes, response.data]);
-        else
-          for (let i = 0; i < response.data.length - 1; i++) {
-            setAddedPhotoes((prevPhotoes) => [
-              ...prevPhotoes,
-              response.data[i],
-            ]);
-          }
-        setReady(false);
+        setPhotoLink(response.data);
       })
-      .catch((e) => alert("didnt work"));
+      .catch(() => alert("didnt work"));
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -79,39 +52,27 @@ export default function AddPatients() {
       !id ||
       !first_name ||
       !last_name ||
-      !addedPhotos ||
-      !Description ||
-      !perks ||
-      !extraInfo ||
-      !chekIn ||
-      !maxGuests ||
-      maxGuests.isInteger === false
+      !adress ||
+      !illness ||
+      !photoLink ||
+      !SSW
     )
       alert("all fields must be filled up");
     else {
       axios
-        .post("/userAccomodation", {
+        .post("/addPatient", {
           id,
           first_name,
           last_name,
-          addedPhotos,
-          Description,
-          perks,
-          extraInfo,
-          chekIn,
-          maxGuests,
+          adress,
+          illness,
+          photoLink,
+          SSW,
         })
         .then((res) => alert(res.data))
-        .catch((e) => alert("didnt work"));
+        .catch(() => alert("didnt work"));
     }
   }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setReady(true);
-    }, 1000);
-    return () => clearTimeout(timer); // Cleanup the timer
-  }, [addedPhotos]);
 
   return (
     <div className="mt-4">
@@ -137,14 +98,8 @@ export default function AddPatients() {
             </svg>
             Add new place
           </Link>
-          <p className="text-left ml-12 cursor-default -mb-5 mt-10 font-semibold text-xl">
-            Listed accomodations{" "}
-          </p>
-          <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-1 gap-4 m-10 border border-transparent">
-            {currentUserAccomodation.length === 0 && (
-              <p>you dont have any listed accomodation !</p>
-            )}
-            {currentUserAccomodation.map((item, key) => (
+          {/* <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-1 gap-4 m-10 border border-transparent">
+            {patients.map((item, key) => (
               <Link
                 to={"/index/" + item.postid}
                 key={key}
@@ -162,7 +117,7 @@ export default function AddPatients() {
                 <p className=" font-semibold">{(key, item.extrainfo)}</p>
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
       )}
       {action === "new" && (
@@ -184,44 +139,40 @@ export default function AddPatients() {
             </Link>
           </div>
           <form onSubmit={handleSubmit}>
-            {preInput(
-              "first_name",
-              "first_name for your place. should be short and catchy"
-            )}
+            {preInput("first name", "first name of the patient ")}
             <input
               type="text"
               value={first_name}
               onChange={(ev) => setfirst_name(ev.target.value)}
-              placeholder="first_name, for example : My lovely appartment"
+              placeholder="first name, for example : mohammed"
             />
-            {preInput("last_name", "Adress to your place")}
+            {preInput("Last name", "Last name of the patient")}
 
             <input
               type="text"
-              placeholder="address"
+              placeholder="last name example : khlif"
               value={last_name}
               onChange={(ev) => setlast_name(ev.target.value)}
             />
-            {preInput("Photos", "photoes of your place")}
+            {preInput("Adress", "home adress of the current patient")}
 
-            <div className="flex gap-2 mb-3">
-              <input
-                value={photoLink}
-                onChange={(ev) => setPhotoLink(ev.target.value)}
-                type="text"
-                placeholder="add using a link ...jpg"
-              />
-              <button
-                className="bg-gray-200 px-4 rounded-2xl"
-                onClick={(e) => {
-                  e.preventDefault();
-                  Addphoto(photoLink);
-                  setReady(false);
-                }}
-              >
-                Add&nbsp;photo
-              </button>
-            </div>
+            <input
+              type="text"
+              placeholder="adress example : les 800-boumerdes"
+              value={adress}
+              onChange={(ev) => setAdress(ev.target.value)}
+            />
+            {preInput("Illness", "Illness of the patient")}
+
+            <input
+              type="text"
+              placeholder="illness example : common cold"
+              value={illness}
+              onChange={(ev) => setIllness(ev.target.value)}
+            />
+
+            {preInput("Photos", "photo of patient")}
+
             <div className="grid gap-3 grid-cols-3 items-center lg:grid-cols-6 md:grid-cols-4">
               <div className="relative mt-2">
                 <input
@@ -252,66 +203,25 @@ export default function AddPatients() {
                   Upload
                 </label>
               </div>
-              {ready === true ? (
-                addedPhotos.length > 0 &&
-                addedPhotos.map((photo, key) => (
-                  <div className="flex w-full h-32 items-center justify-center">
-                    <img
-                      key={key}
-                      src={"http://localhost:8000/images/" + photo}
-                      className="object-cover rounded-2xl w-full h-full"
-                    ></img>
-                  </div>
-                ))
+
+              {photoLink ? (
+                <img src={"http://localhost:8000/images/" + photoLink} alt="" />
               ) : (
                 <div>loading...</div>
               )}
             </div>
 
-            {preInput("Description", "Describe your place")}
-
-            <textarea
-              rows="5"
-              value={Description}
-              onChange={(ev) => setDescription(ev.target.value)}
-            />
-
-            {preInput("Perks", "Select the perks of your place")}
-
-            <Perks selected={perks} onChange={setPerks} />
-
-            {preInput("Price", "$ per night")}
-
-            <textarea
-              rows="3"
-              value={extraInfo}
-              onChange={(ev) => setExtraInfo(ev.target.value)}
-            />
             {preInput(
-              "Chek in&out times. max guests",
-              " add check in and out times, remmember to have down times for cleaning"
+              "social security number",
+              "social security number of the patient"
             )}
 
-            <div className="grid sm:grid-cols-3 gap-2">
-              <div>
-                <h3 className="mt-2 mb-2">Check in time</h3>
-                <input
-                  type="text"
-                  placeholder="ex...14:00"
-                  value={chekIn}
-                  onChange={(ev) => setChekIn(ev.target.value)}
-                />
-              </div>
-              <div>
-                <h3 className="mt-2 mb-2">Max number of guests</h3>
-                <input
-                  type="text"
-                  value={maxGuests}
-                  onChange={(ev) => setMaxGuests(ev.target.value)}
-                />
-              </div>
-            </div>
-
+            <input
+              type="text"
+              placeholder="SSW  example : 1234 1234 1234 "
+              value={SSW}
+              onChange={(ev) => setSSW(ev.target.value)}
+            />
             <button
               type="submit"
               className="border bg-primary p-2 rounded-xl items-center text-white mt-4 mb-4"

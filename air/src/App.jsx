@@ -15,7 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="/" element={<IndexPage />} />
+            <Route path="/index" element={<IndexPage />} />
             <Route path="/index/:action?" element={<IndexElements />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/account/:subpage?" element={<ProfilePage />} />

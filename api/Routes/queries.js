@@ -11,8 +11,8 @@ const queries = {
     "UPDATE admins SET password = $1  WHERE id = $2 RETURNING email, password",
   updateNameAndPassQuery:
     "UPDATE admins SET name = $1 , password = $2   WHERE id = $3 RETURNING email, password",
-  addUserAccomodationQuery: `
-    INSERT INTO patients (id,first_name,last_name,adress,photo,socialsecuritynumber,illness)
+  addPatientQuery: `
+    INSERT INTO patients (first_name,last_name,adress,photo,socialsecuritynumber,illness)
     VALUES ($1,$2,$3,$4,$5,$6)
   `,
 };

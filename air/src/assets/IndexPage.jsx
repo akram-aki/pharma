@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { userContext } from "../User";
 
 export default function IndexPage() {
@@ -15,15 +14,15 @@ export default function IndexPage() {
           className=" rounded-lg grid"
         >
           <img
-            key={key}
-            src={"http://localhost:8000/images/" + item.addedphotos[0]}
+            src={`http://localhost:8000/images/${item.photo}`}
             alt="img"
-            className="h-72 object-cover w-full rounded-lg "
+            className="h-72 object-cover w-full rounded-lg"
           />
-          <span className="font-semibold">{(key, item.title)}</span>
-          <span className="opacity-55 ">{key}1,618 kilometers away</span>
-          <span className="opacity-55">{(key, item.adress)} </span>
-          <p className=" font-semibold">{(key, item.extrainfo + "$ night")}</p>
+          <span className="font-semibold">
+            {(key, item.first_name + " " + item.last_name)}
+          </span>
+          <span className="opacity-55">{(key, item.illness)} </span>
+          <span className="opacity-55 ">{item.adress}</span>
         </Link>
       ))}
     </div>
