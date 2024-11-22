@@ -45,18 +45,24 @@ export default function Header2() {
         </div>
       </div>
       {/*center div */}
-      <div className="flex justify-between gap-8 uppercase font-medium ">
-        <a href="" className="text-light1 hover:text-heavy1 transition-colors">
+      <div className="flex justify-between gap-8 uppercase font-medium border rounded-full shadow-md p-3 ">
+        <a
+          href="/index"
+          className="text-light1 hover:text-heavy1 transition-colors"
+        >
           patients
         </a>
-        <a href="" className="text-light1 hover:text-heavy1 transition-colors">
-          patients
+        <a
+          href="/index"
+          className="text-light1 hover:text-heavy1 transition-colors"
+        >
+          medication list
         </a>
-        <a href="" className="text-light1 hover:text-heavy1 transition-colors">
-          patients
-        </a>
-        <a href="" className="text-light1 hover:text-heavy1 transition-colors">
-          patients
+        <a
+          href="/index"
+          className="text-light1 hover:text-heavy1 transition-colors"
+        >
+          help
         </a>
       </div>
       {/* right div */}

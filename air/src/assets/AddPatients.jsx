@@ -11,7 +11,7 @@ export default function AddPatients() {
   const [photoLink, setPhotoLink] = useState("");
   const [SSW, setSSW] = useState("");
   const [illness, setIllness] = useState("");
-  const { id, patients } = useContext(userContext);
+  const { id } = useContext(userContext);
 
   function inputHeader(text) {
     return <h2 className="text-2xl mt-4  ">{text}</h2>;
@@ -96,7 +96,7 @@ export default function AddPatients() {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            Add new place
+            Add patient
           </Link>
           {/* <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-1 gap-4 m-10 border border-transparent">
             {patients.map((item, key) => (

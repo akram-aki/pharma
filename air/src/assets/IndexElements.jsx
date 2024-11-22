@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { userContext } from "../User";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import IconsRender from "./IconsRender";
 
 export default function IndexElements() {
   const { action } = useParams();

@@ -8,11 +8,7 @@ export default function IndexPage() {
   return (
     <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-1 gap-4 m-10 border border-transparent">
       {items.map((item, key) => (
-        <Link
-          to={"/index/" + item.postid}
-          key={key}
-          className=" rounded-lg grid"
-        >
+        <Link to={"/index/" + item.id} key={key} className=" rounded-lg grid">
           <img
             src={`http://localhost:8000/images/${item.photo}`}
             alt="img"

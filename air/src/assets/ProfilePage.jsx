@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ProfileSettingPage from "./ProfileSettings";
 import AddPatients from "./AddPatients";
-import Bookings from "./Bookings";
 
 export default function ProfilePage() {
   const [currpage, setCurrPage] = useState("Settings");
